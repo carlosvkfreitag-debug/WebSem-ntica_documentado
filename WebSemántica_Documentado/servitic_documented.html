@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<!-- 
+    DOCTYPE: Declaración del tipo de documento HTML5
+    Es OBLIGATORIA y debe ser la primera línea del archivo
+    Indica al navegador que estamos usando HTML5
+-->
+
+<html lang="es">
+<!-- 
+    Etiqueta raíz del documento HTML
+    lang="es": Especifica el idioma del contenido (español)
+    IMPORTANTE para accesibilidad y SEO
+    Alternativa: lang="en" para inglés, lang="fr" para francés, etc.
+-->
+
+<head>
+    <!-- 
+        HEAD: Contiene metadatos (información sobre la página)
+        NO se muestra visualmente en el navegador
+        Incluye: título, enlaces a CSS, scripts, metadatos SEO
+    -->
+
+    <meta charset="UTF-8">
+    <!-- 
+        Define la codificación de caracteres como UTF-8
+        UTF-8 soporta todos los caracteres (español, emojis, etc.)
+        SIEMPRE debe estar al principio del HEAD
+        Sin esto, las tildes y ñ podrían verse mal
+    -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 
+        CRUCIAL para diseño responsive (adaptable a móviles)
+        width=device-width: El ancho se adapta al dispositivo
+        initial-scale=1.0: Zoom inicial al 100%
+        Sin esto, la web se vería mal en móviles
+    -->
+
+    <title>SERVITIC - Servicios Tecnológicos y Mantenimiento Informático</title>
+    <!-- 
+        Título que aparece en la pestaña del navegador
+        IMPORTANTE para SEO (Google lo usa en resultados)
+        Máximo recomendado: 60 caracteres
+        EJERCICIO: Cambia el título por el nombre de tu empresa
+    -->
+
+    <style>
+        /* ==========================================
+           RESET CSS Y ESTILOS BASE
+           ========================================== */
+        
+        * {
+            /* 
+                Selector universal (*): Selecciona TODOS los elementos
+                Se usa para resetear estilos predeterminados del navegador
+                Cada navegador tiene estilos diferentes por defecto
+            */
+            margin: 0;          /* Elimina márgenes externos de todos los elementos */
+            padding: 0;         /* Elimina espacios internos de todos los elementos */
+            box-sizing: border-box;
+            /* 
+                box-sizing: border-box es FUNDAMENTAL
+                Hace que padding y border se incluyan en el width/height
+                Sin esto, un div de 300px + 20px padding = 340px (confuso)
+                Con esto, un div de 300px + 20px padding = 300px (predecible)
+                EJERCICIO: Quita esta línea y observa cómo cambian los tamaños
+            */
+        }
+
+        body {
+            /* 
+                BODY: Contenedor principal de todo el contenido visible
+                Los estilos aquí se heredan a todos los elementos hijos
+            */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* 
+                font-family: Lista de fuentes en orden de preferencia
+                El navegador usa la primera disponible
+                sans-serif: Fuente genérica como respaldo final
+                EJERCICIO: Prueba con 'Arial' o 'Georgia' para ver diferencias
+            */
+            line-height: 1.6;
+            /* 
+                Altura de línea (espacio entre líneas de texto)
+                1.6 = 160% del tamaño de fuente (buena legibilidad)
+                Valores típicos: 1.4 - 1.8
+                EJERCICIO: Prueba con 1 y con 3 para ver la diferencia
+            */
+            color: #333;
+            /* 
+                Color del texto por defecto
+                #333: Gris oscuro (más suave que el negro puro #000)
+                Formato hexadecimal: #RRGGBB
+                EJERCICIO: Cambia a #000 (negro) o #666 (gris medio)
+            */
+        }
+
+        .container {
+            /* 
+                CLASE CONTAINER: Patrón común en diseño web
+                Centra el contenido y limita su ancho máximo
+                Se reutiliza en toda la página
+            */
+            max-width: 1200px;
+            /* 
+                Ancho máximo del contenedor
+                Evita que el contenido sea demasiado ancho en pantallas grandes
+                1200px es un estándar común (también 1140px, 960px)
+                EJERCICIO: Prueba con 800px o 1600px
+            */
+            margin: 0 auto;
+            /* 
+                margin: 0 auto centra el elemento horizontalmente
+                0 = margen superior e inferior
+                auto = margen izquierdo y derecho automático (centra)
+                Solo funciona con elementos de bloque con width definido
+            */
+            padding: 0 20px;
+            /* 
+                padding: 0 20px añade espacio interno
+                0 = arriba y abajo
+                20px = izquierda y derecha
+                Evita que el contenido toque los bordes en pantallas pequeñas
+            */
+        }
+
+        /* ==========================================
+           HEADER (CABECERA)
+           ========================================== */
+
+        header {
+            /* 
+                HEADER: Etiqueta semántica de HTML5 para la cabecera
+                Generalmente contiene logo, navegación, etc.
+            */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            /* 
+                linear-gradient: Gradiente lineal (degradado)
+                135deg: Ángulo del gradiente (diagonal)
+                #667eea: Color inicial (azul/morado)
+                #764ba2: Color final (morado)
+                0% y 100%: Posiciones de inicio y fin
+                EJERCICIO: Cambia el ángulo a 90deg (vertical) o 0deg (horizontal)
+                EJERCICIO 2: Usa herramientas como cssgradient.io para crear gradientes
+            */
+            color: white;       /* Color del texto dentro del header */
+            padding: 1rem 0;
+            /* 
+                rem: Unidad relativa al tamaño de fuente raíz
+                1rem = 16px por defecto
+                Es mejor que px porque se adapta si el usuario cambia el tamaño de fuente
+                EJERCICIO: Cambia rem por px y compara
+            */
+            position: sticky;
+            /* 
+                position: sticky es INCREÍBLE
+                El header se queda fijo cuando haces scroll hacia abajo
+                Combina position: relative y position: fixed
+                Alternativa: position: fixed (siempre fijo, pero puede tapar contenido)
+            */
+            top: 0;
+            /* 
+                Con position: sticky, define dónde se "pega"
+                top: 0 significa que se pega en la parte superior
+                EJERCICIO: Cambia a top: 20px y observa la diferencia
+            */
+            z-index: 1000;
+            /* 
+                z-index: Controla el orden de apilamiento (profundidad)
+                Valores altos aparecen encima de valores bajos
+                1000 es un valor alto común para asegurar que esté encima
+                Necesita position: relative, absolute, fixed o sticky
+                EJERCICIO: Cambia a z-index: 1 y observa si se oculta bajo otros elementos
+            */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            /* 
+                box-shadow: Sombra debajo del header
+                Sintaxis: horizontal vertical difuminado color
+                0: sin desplazamiento horizontal
+                2px: desplazamiento vertical hacia abajo
+                10px: cantidad de difuminado
+                rgba(0,0,0,0.1): negro con 10% de opacidad
+                EJERCICIO: Cambia a "0 5px 20px rgba(0,0,0,0.3)" para sombra más pronunciada
+            */
+        }
+
+        .header-content {
+            /* 
+                Contenedor interno del header
+                Usa flexbox para alinear logo y navegación
+            */
+            display: flex;
+            /* 
+                FLEXBOX: Sistema de diseño unidimensional (fila o columna)
+                Es FUNDAMENTAL en CSS moderno
+                Permite alinear y distribuir elementos fácilmente
+                Alternativa: CSS Grid (para layouts bidimensionales)
+            */
+            align-items: center;
+            /* 
+                align-items: Alineación vertical en flexbox
+                center: centra verticalmente los elementos
+                Otras opciones: flex-start, flex-end, stretch
+            */
+            justify-content: space-between;
+            /* 
+                justify-content: Alineación horizontal en flexbox
+                space-between: Primer elemento a la izquierda, último a la derecha
+                Otras opciones: center, flex-start, flex-end, space-around
+                EJERCICIO: Prueba con center o space-around
+            */
+        }
+
+        .logo {
+            /* 
+                Clase para el logo de la empresa
+            */
+            width: 20%;
+            /* 
+                Ancho del 20% del contenedor padre
+                Porcentajes son responsive (se adaptan al tamaño de pantalla)
+                EJERCICIO: Cambia a 30% y ajusta nav a 70%
+            */
+            font-size: 1.8rem;      /* Tamaño de fuente: 1.8 × 16px = 28.8px */
+            font-weight: bold;      /* Texto en negrita (también: 100-900) */
+            letter-spacing: 2px;
+            /* 
+                letter-spacing: Espacio entre letras
+                Valores positivos separan, negativos juntan
+                Útil para logos y títulos
+                EJERCICIO: Prueba con 0px, 5px, -1px
+            */
+        }
+
+        nav {
+            /* 
+                NAV: Etiqueta semántica para navegación
+                Contiene los enlaces del menú
+            */
+            width: 80%;     /* Ocupa el 80% del ancho (complementa el 20% del logo) */
+        }
+
+        nav ul {
+            /* 
+                UL: Lista desordenada (unordered list)
+                Por defecto tiene viñetas (bullets) y padding
+            */
+            list-style: none;
+            /* 
+                Elimina las viñetas de la lista
+                Es común en menús de navegación
+            */
+            display: flex;
+            /* 
+                Convierte la lista vertical en horizontal usando flexbox
+                Los elementos <li> se colocan en fila
+            */
+            justify-content: flex-end;
+            /* 
+                Alinea los elementos al final (derecha) del contenedor
+                EJERCICIO: Cambia a center, flex-start o space-evenly
+            */
+            gap: 2rem;
+            /* 
+                gap: Espacio entre elementos flex o grid
+                Más limpio que usar margin en cada elemento
+                2rem = 32px de separación entre cada enlace
+                EJERCICIO: Prueba con 1rem o 4rem
+            */
+        }
+
+        nav a {
+            /* 
+                Selector de descendientes: selecciona todos los <a> dentro de <nav>
+                Estiliza los enlaces del menú
+            */
+            color: white;           /* Color del texto del enlace */
+            text-decoration: none;
+            /* 
+                Elimina el subrayado predeterminado de los enlaces
+                Por defecto, los enlaces tienen underline
+                EJERCICIO: Comenta esta línea para ver el subrayado
+            */
+            font-weight: 500;
+            /* 
+                Peso de la fuente (grosor)
+                Valores: 100 (thin) a 900 (black)
+                400 es normal, 700 es bold
+                500 es un término medio
+            */
+            transition: opacity 0.3s;
+            /* 
+                TRANSICIÓN: Anima cambios de propiedades CSS
+                opacity: propiedad que se anima
+                0.3s: duración de la animación (300 milisegundos)
+                Hace que el hover sea suave, no abrupto
+                EJERCICIO: Cambia a 1s para ver una animación más lenta
+            */
+            padding: 0.5rem 1rem;
+            /* 
+                padding: 0.5rem 1rem
+                0.5rem (8px) arriba y abajo
+                1rem (16px) izquierda y derecha
+                Agranda el área clickeable del enlace (mejor UX)
+            */
+        }
+
+        nav a:hover {
+            /* 
+                :hover es un PSEUDO-SELECTOR
+                Se activa cuando el cursor está sobre el elemento
+                Proporciona feedback visual al usuario
+            */
+            opacity: 0.8;
+            /* 
+                Reduce la opacidad al 80% (hace el enlace semi-transparente)
+                Valores: 0 (invisible) a 1 (opaco)
+                EJERCICIO: Prueba con 0.5 para efecto más pronunciado
+            */
+            background: rgba(255,255,255,0.1);
+            /* 
+                rgba: Color con canal alfa (transparencia)
+                rgb(255,255,255) = blanco
+                0.1 = 10% de opacidad (muy sutil)
+                Crea un efecto de resaltado suave
+            */
+            border-radius: 5px;
+            /* 
+                Redondea las esquinas
+                5px de radio en cada esquina
+                Valores más altos = esquinas más redondeadas
+                EJERCICIO: Prueba con 15px o 50% (círculo si width = height)
+            */
+        }
+
+        /* ==========================================
+           HERO SECTION (SECCIÓN PRINCIPAL/BANNER)
+           ========================================== */
+
+        .hero {
+            /* 
+                HERO: Término común en diseño web
+                Es la primera sección llamativa con mensaje principal
+                También llamado "banner" o "jumbotron"
+            */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            /* Mismo gradiente que el header para mantener consistencia visual */
+            color: white;
+            text-align: center;
+            /* 
+                Centra todo el texto horizontalmente
+                Se aplica a elementos inline e inline-block
+            */
+            padding: 5rem 0;
+            /* 
+                5rem arriba y abajo (80px)
+                0 izquierda y derecha
+                Crea mucho espacio respiratorio
+                EJERCICIO: Cambia a 2rem para ver diferencia
+            */
+        }
+
+        .hero h1 {
+            /* 
+                H1: Encabezado de nivel 1 (el más importante)
+                Solo debe haber UN h1 por página (SEO)
+                Los niveles van de h1 a h6 (menor a mayor jerarquía)
+            */
+            font-size: 3rem;
+            /* 
+                3rem = 48px (3 × 16px)
+                Tamaño grande para el título principal
+                EJERCICIO: Prueba valores entre 2rem y 5rem
+            */
+            margin-bottom: 1rem;
+            /* 
+                Espacio debajo del título
+                Separa el h1 del párrafo siguiente
+            */
+        }
+
+        .hero p {
+            /* 
+                Selecciona solo los párrafos dentro de .hero
+                Especificidad: más específico que solo "p"
+            */
+            font-size: 1.3rem;      /* 20.8px - un poco más grande que el texto normal */
+            opacity: 0.9;
+            /* 
+                90% de opacidad
+                Hace el texto ligeramente más tenue que el título
+                Crea jerarquía visual
+            */
+        }
+
+        /* ==========================================
+           SECTIONS GENERALES
+           ========================================== */
+
+        section {
+            /* 
+                SECTION: Etiqueta semántica para secciones de contenido
+                Mejor que usar solo <div> (mejor para SEO y accesibilidad)
+            */
+            padding: 4rem 0;
+            /* 
+                4rem (64px) arriba y abajo
+                Crea espacio entre secciones
+                EJERCICIO: Cambia a 2rem o 6rem para ver diferencias
+            */
+        }
+
+        section h2 {
+            /* 
+                H2: Encabezado de nivel 2
+                Usarlo para títulos de secciones
+                Jerarquía: h1 > h2 > h3 > h4 > h5 > h6
+            */
+            text-align: center;     /* Centra el título */
+            font-size: 2.5rem;      /* 40px - grande pero menor que h1 */
+            margin-bottom: 3rem;    /* Espacio debajo del título */
+            color: #667eea;
+            /* 
+                Usa el mismo color del gradiente
+                Crea consistencia visual en toda la página
+            */
+        }
+
+        /* ==========================================
+           SECCIÓN SERVICIOS
+           ========================================== */
+
+        #servicios {
+            /* 
+                Selector de ID (#): Selecciona elemento con id="servicios"
+                Los IDs deben ser ÚNICOS en la página
+                Usado para enlaces ancla: <a href="#servicios">
+                Alternativa: Usar clases (.servicios) si necesitas reutilizar
+            */
+            background: #f8f9fa;
+            /* 
+                Color de fondo gris muy claro
+                Alterna fondos entre secciones (blanco/gris) para separación visual
+                EJERCICIO: Prueba con #e9ecef o #ffffff
+            */
+        }
+
+        .servicios-grid {
+            /* 
+                Contenedor para las tarjetas de servicios
+                Usa CSS Grid (sistema de diseño bidimensional)
+            */
+            display: grid;
+            /* 
+                CSS GRID: Sistema de layout potente
+                Permite crear diseños en filas y columnas
+                Más potente que flexbox para layouts complejos
+            */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            /* 
+                ESTA LÍNEA ES MÁGICA - hace el diseño responsive automáticamente
+                
+                repeat(): Repite un patrón de columnas
+                auto-fit: Crea tantas columnas como quepan
+                minmax(280px, 1fr): Cada columna mínimo 280px, máximo 1 fracción
+                1fr: "1 fracción" - divide el espacio disponible equitativamente
+                
+                Resultado: En pantallas grandes: 3 columnas
+                           En tablets: 2 columnas
+                           En móviles: 1 columna
+                
+                EJERCICIO: Cambia 280px a 400px para ver cómo afecta
+                EJERCICIO 2: Prueba con "repeat(3, 1fr)" para 3 columnas fijas
+            */
+            gap: 2rem;
+            /* 
+                Espacio entre las tarjetas (filas y columnas)
+                Más limpio que usar margins
+            */
+        }
+
+        .servicio-card {
+            /* 
+                Clase para cada tarjeta de servicio individual
+                Se aplica a 6 tarjetas en el HTML
+            */
+            background: white;      /* Fondo blanco (contrasta con el gris de la sección) */
+            padding: 2rem;          /* Espacio interno generoso */
+            border-radius: 10px;
+            /* 
+                Esquinas redondeadas de 10px
+                Da aspecto moderno y suave
+                EJERCICIO: Prueba con 0px (cuadrado) o 25px (muy redondeado)
+            */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            /* 
+                Sombra suave debajo de la tarjeta
+                0: sin desplazamiento horizontal
+                5px: 5px hacia abajo
+                15px: difuminado de 15px
+                rgba(0,0,0,0.1): negro al 10% de opacidad
+                Crea sensación de profundidad (levantada del fondo)
+            */
+            transition: transform 0.3s;
+            /* 
+                Prepara la animación para el hover
+                transform se animará durante 0.3 segundos
+            */
+        }
+
+        .servicio-card:hover {
+            /* 
+                Efecto al pasar el cursor sobre la tarjeta
+                Proporciona interactividad y feedback visual
+            */
+            transform: translateY(-5px);
+            /* 
+                transform: translateY() mueve el elemento en el eje Y
+                -5px: mueve 5px HACIA ARRIBA (negativo = arriba)
+                Crea efecto de "levitación"
+                EJERCICIO: Prueba con -10px o añade scale(1.05) para agrandar
+            */
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            /* 
+                Sombra más grande y más oscura en hover
+                Refuerza el efecto de elevación
+            */
+        }
+
+        .servicio-card h3 {
+            /* 
+                H3: Título de cada tarjeta
+                Mantén la jerarquía: h1 > h2 > h3
+            */
+            color: #667eea;         /* Color del tema */
+            margin-bottom: 1rem;    /* Espacio debajo del título */
+            font-size: 1.5rem;      /* 24px */
+        }
+
+        .servicio-card p {
+            /* 
+                Párrafo con la descripción del servicio
+            */
+            color: #666;
+            /* 
+                Gris medio para el texto del cuerpo
+                Menos prominente que los títulos
+            */
+            line-height: 1.8;
+            /* 
+                Espacio entre líneas generoso
+                Mejora la legibilidad
+            */
+        }
+
+        /* ==========================================
+           SECCIÓN QUIÉNES SOMOS
+           ========================================== */
+
+        #quienes-somos {
+            background: white;
+            /* 
+                Fondo blanco (alterna con el gris de servicios)
+                Crea separación visual entre secciones
+            */
+        }
+
+        .about-content {
+            /* 
+                Contenedor del contenido de "Quiénes somos"
+            */
+            max-width: 800px;
+            /* 
+                Limita el ancho para mejor legibilidad
+                Líneas muy largas de texto son difíciles de leer
+                Regla general: 50-75 caracteres por línea
+            */
+            margin: 0 auto;         /* Centra el contenedor */
+            text-align: center;     /* Centra el texto */
+            line-height: 1.8;       /* Espacio entre líneas */
+            color: #555;            /* Gris medio oscuro */
+        }
+
+        .about-content p {
+            margin-bottom: 1.5rem;
+            /* 
+                Espacio entre párrafos
+                Mejora la legibilidad y estructura visual
+            */
+            font-size: 1.1rem;
+            /* 
+                Ligeramente más grande que el texto normal
+                Hace el contenido más legible
+            */
+        }
+
+        /* ==========================================
+           SECCIÓN CONTACTO
+           ========================================== */
+
+        #contacto {
+            background: #f8f9fa;    /* Vuelve al fondo gris (patrón alternado) */
+        }
+
+        .contacto-form {
+            /* 
+                Contenedor del formulario
+                Los formularios merecen diseño especial
+            */
+            max-width: 600px;       /* Limita el ancho para mejor UX */
+            margin: 0 auto;         /* Centra el formulario */
+            background: white;      /* Fondo blanco (destaca sobre el gris) */
+            padding: 2rem;          /* Espacio interno */
+            border-radius: 10px;    /* Esquinas redondeadas */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);  /* Sombra suave */
+        }
+
+        .form-group {
+            /* 
+                Agrupa cada campo del formulario (label + input)
+                Patrón común en diseño de formularios
+            */
+            margin-bottom: 1.5rem;
+            /* 
+                Espacio entre campos
+                Mejora la organización visual
+            */
+        }
+
+        .form-group label {
+            /* 
+                LABEL: Etiqueta del campo de formulario
+                IMPORTANTE para accesibilidad
+                Al hacer clic en el label, se activa el input asociado
+            */
+            display: block;
+            /* 
+                display: block hace que el label ocupe toda la línea
+                Fuerza al input a ir en la línea siguiente
+                Alternativa: inline-block si quieres label e input en la misma línea
+            */
+            margin-bottom: 0.5rem;  /* Espacio entre label e input */
+            color: #333;            /* Color oscuro para legibilidad */
+            font-weight: 500;       /* Ligeramente bold */
+        }
+
+        .form-group input,
+        .form-group textarea {
+            /* 
+                Selector múltiple: aplica a input Y textarea
+                Evita repetir código
+            */
+            width: 100%;
+            /* 
+                Ancho completo del contenedor
+                Los campos de formulario deben ser fáciles de usar
+            */
+            padding: 0.8rem;
+            /* 
+                Espacio interno
+                Hace los campos más grandes y fáciles de clickear
+            */
+            border: 1px solid #ddd;
+            /* 
+                Borde sutil gris claro
+                1px: grosor
+                solid: estilo (también: dashed, dotted)
+                #ddd: color gris muy claro
+            */
+            border-radius: 5px;     /* Esquinas ligeramente redondeadas */
+            font-family: inherit;
+            /* 
+                inherit: Hereda la fuente del elemento padre
+                Por defecto, los inputs tienen fuentes diferentes
+                Mantiene consistencia visual
+            */
+            font-size: 1rem;        /* Tamaño estándar (16px) */
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            /* 
+                :focus se activa cuando el campo está seleccionado
+                Proporciona feedback visual importante
+            */
+            outline: none;
+            /* 
+                Elimina el outline azul predeterminado del navegador
+                IMPORTANTE: Si eliminas outline, DEBES añadir otra indicación visual
+                Aquí usamos border-color
+            */
+            border-color: #667eea;
+            /* 
+                Cambia el color del borde al color del tema
+                Indica al usuario que el campo está activo
+            */
+        }
+
+        .form-group textarea {
+            /* 
+                Estilos específicos solo para textarea
+            */
+            resize: vertical;
+            /* 
+                Permite redimensionar solo verticalmente
+                Evita que el usuario rompa el layout redimensionando horizontalmente
+                Opciones: none (no redimensionable), both (ambas direcciones)
+            */
+            min-height: 120px;
+            /* 
+                Altura mínima del textarea
+                Proporciona espacio visible para mensajes largos
+                EJERCICIO: Cambia a 80px o 200px
+            */
+        }
+
+        .btn-submit {
+            /* 
+                Clase para el botón de envío
+                Los botones merecen diseño especial
+            */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            /* Gradiente del tema (consistencia visual) */
+            color: white;           /* Texto blanco */
+            padding: 1rem 2rem;
+            /* 
+                1rem arriba/abajo, 2rem izquierda/derecha
+                Botón grande y fácil de clickear
+            */
+            border: none;
+            /* 
+                Elimina el borde predeterminado del botón
+                Los botones tienen bordes feos por defecto
+            */
+            border-radius: 5px;     /* Esquinas redondeadas */
+            font-size: 1rem;        /* Tamaño estándar */
+            font-weight: 600;       /* Semi-bold */
+            cursor: pointer;
+            /* 
+                cursor: pointer cambia el cursor a una mano
+                Indica que el elemento es clickeable
+                IMPORTANTE para UX
+            */
+            transition: transform 0.3s;  /* Prepara animación */
+            width: 100%;
+            /* 
+                Botón de ancho completo
+                Común en formularios de contacto
+                EJERCICIO: Cambia a width: auto para botón del tamaño del texto
+            */
+        }
+
+        .btn-submit:hover {
+            /* 
+                Efecto hover del botón
+                CRUCIAL para indicar que es clickeable
+            */
+            transform: translateY(-2px);
+            /* 
+                Mueve el botón 2px hacia arriba
+                Efecto sutil de elevación
+            */
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            /* 
+                Añade sombra al hacer hover
+                Color basado en el gradiente del botón
+                Refuerza el efecto 3D
+            */
+        }
+
+        /* ==========================================
+           FOOTER (PIE DE PÁGINA)
+           ========================================== */
+
+        footer {
+            /* 
+                FOOTER: Etiqueta semántica para el pie de página
+                Generalmente contiene info de contacto, enlaces legales, copyright
+            */
+            background: #2c3e50;
+            /* 
+                Color oscuro (azul grisáceo oscuro)
+                Contrasta con las secciones claras anteriores
+            */
+            color: white;           /* Texto blanco sobre fondo oscuro */
+            padding: 2rem 0 1rem;
+            /* 
+                2rem arriba, 1rem abajo, 0 izquierda/derecha
+                Más espacio arriba que abajo (equilibrio visual)
+            */
+        }
+
+        .footer-content {
+            /* 
+                Contenedor para las columnas del footer
+                Usa CSS Grid para layout
+            */
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            /* 
+                Similar a servicios-grid
+                Crea columnas automáticas responsive
+                Mínimo 250px por columna
+                auto-fit: se ajusta automáticamente al espacio
+            */
+            gap: 2rem;              /* Espacio entre columnas */
+            margin-bottom: 2rem;    /* Espacio debajo del contenido */
+        }
+
+        .footer-section {
+            /* 
+                Cada columna del footer
+            */
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;    /* Espacio debajo del título */
+            color: #667eea;         /* Color del tema (consistencia) */
+        }
+
+        .footer-section p,
+        .footer-section a {
+            /* 
+                
