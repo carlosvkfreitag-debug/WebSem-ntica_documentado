@@ -1,6 +1,4 @@
 ```mermaid
-@startuml
-skinparam classAttributeIconSize 0
 
 class Producto {
     - nombre: String
@@ -22,5 +20,3 @@ class Main {
 Main ..> Producto : <<instantiates>>
 Main ..> CalculadoraIVA : <<uses>>
 Main ..> java.util.Scanner : <<uses>>
-
-@enduml
