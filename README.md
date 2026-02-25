@@ -19,7 +19,8 @@ classDiagram
         +calcularPrecioFinal(double precio) double
     }
 
-    class Scanner <<External>> {
+    class Scanner {
+        <<External>>
     }
 
     Main ..> Producto : crea instancia
