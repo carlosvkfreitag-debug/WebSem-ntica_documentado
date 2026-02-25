@@ -1,4 +1,4 @@
-```mermaidsequenceDiagram
+```mermaid
 classDiagram
     direction TB
 
