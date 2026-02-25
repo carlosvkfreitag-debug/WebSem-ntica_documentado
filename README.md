@@ -1,4 +1,7 @@
 ```mermaid
+@startuml
+
+skinparam classAttributeIconSize 0
 
 class Producto {
     - nombre: String
@@ -16,7 +19,9 @@ class Main {
     + {static} main(args: String[]): void
 }
 
-' Relaciones de dependencia (uso)
-Main ..> Producto : <<instantiates>>
-Main ..> CalculadoraIVA : <<uses>>
-Main ..> java.util.Scanner : <<uses>>
+' Relaciones de dependencia
+Main ..> Producto : "instancia"
+Main ..> CalculadoraIVA : "usa"
+Main ..> java.util.Scanner : "usa"
+
+@enduml
