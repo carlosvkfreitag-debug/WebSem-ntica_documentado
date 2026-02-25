@@ -1,23 +1,27 @@
 ```mermaid
 
 classDiagram
-    class Producto {
-        - nombre: String
-        - precioBase: double
-        + Producto(nombre: String, precioBase: double)
-        + getPrecioBase(): double
-    }
-    
-    class CalculadoraIVA {
-        - IVA: double = 0.21
-        + calcularPrecioFinal(precio: double): double
-    }
-    
+    direction TB
+
     class Main {
-        + {static} main(args: String[]): void
+        +main(String[] args)$
     }
-    
-    ' Relaciones de dependencia
-    Main ..> Producto : "instancia"
-    Main ..> CalculadoraIVA : "usa"
-    Main ..> java.util.Scanner : "usa"
+
+    class Producto {
+        -String nombre
+        -double precioBase
+        +Producto(String nombre, double precioBase)
+        +getPrecioBase() double
+    }
+
+    class CalculadoraIVA {
+        -double IVA
+        +calcularPrecioFinal(double precio) double
+    }
+
+    class Scanner <<External>> {
+    }
+
+    Main ..> Producto : crea instancia
+    Main ..> CalculadoraIVA : usa para calcular
+    Main ..> Scanner : lee entrada
