@@ -1,26 +1,42 @@
 ```mermaid
-sequenceDiagram
-    autonumber
-    actor Usuario
-    participant M as Main
-    participant S as Scanner <<External>>
-    participant P as Producto
-    participant C as CalculadoraIVA
+classDiagram
 
-    Usuario->>M: Ejecuta el programa
-    M->>S: nextLine() (pide Nombre)
-    S-->>M: retorna "Nombre"
-    M->>S: nextDouble() (pide Precio)
-    S-->>M: retorna precioBase
-    
-    Note over M,P: Instanciación del objeto
-    M->>P: new Producto(nombre, precio)
-    P-->>M: objeto creado
-    
-    M->>P: getPrecioBase()
-    P-->>M: retorna precioBase
-    
-    M->>C: calcularPrecioFinal(precioBase)
-    C-->>M: retorna precio con IVA (21%)
-    
-    M->>Usuario: Muestra "Total con IVA"
+class Cliente {
+  -id: int
+  -nombre: String
+  -email: String
+  +realizarPedido(p: Pedido): void
+  +getPedidos(): List~Pedido~
+}
+
+class Pedido {
+  -id: int
+  -fecha: Date
+  -estado: EstadoPedido
+  +agregarLinea(lp: LineaPedido): void
+  +eliminarLinea(lp: LineaPedido): void
+  +calcularTotal(): double
+}
+
+class LineaPedido {
+  -cantidad: int
+  +calcularSubtotal(): double
+}
+
+class Producto {
+  -id: int
+  -nombre: String
+  -precio: double
+  +getPrecio(): double
+}
+
+class EstadoPedido {
+  <<enumeration>>
+  PENDIENTE
+  ENTREGADO
+}
+
+Cliente "1" o-- "0..*" Pedido : realiza
+Pedido "1" *-- "1..*" LineaPedido : contiene
+LineaPedido "0..*" --> "1" Producto : producto
+Pedido --> EstadoPedido
